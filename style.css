@@ -1,0 +1,193 @@
+/* O Medidor ocupa 100% da largura e mantém proporção 2:1 */
+.gauge-container {
+    position: relative;
+    width: 100%; 
+    max-width: 500px; /* Limite para não ficar gigante em PC */
+    aspect-ratio: 2 / 1; /* Mantém formato semicírculo perfeito */
+    margin: 0 auto;
+    overflow: hidden;
+    touch-action: none; 
+}
+
+.needle {
+    transform-origin: bottom center;
+    transition: transform 0.1s ease-out;
+}
+
+.screen { display: none; }
+.screen.active { display: flex; }
+
+/* Estilo dos números dentro do alvo */
+.score-label {
+    font-size: 10px;
+    font-weight: 900;
+    fill: white;
+    text-anchor: middle;
+    dominant-baseline: central;
+    pointer-events: none;
+}
+/* BOX black
+.score-box {
+    fill: black;
+    rx: 3;
+    ry: 3;
+    pointer-events: none;
+}
+
+/* NOVO: Fundo animado para a tela de setup */
+.setup-bg {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Animação de entrada para os inputs */
+.fade-in-up {
+    animation: fadeInUp 0.5s ease-out forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Estilo personalizado para o Select */
+.custom-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+}
+
+/* Fundo Animado Global */
+body {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    min-height: 100vh;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Container Principal do Celular (Vidro Base) */
+.app-container {
+    background-color: rgba(255, 255, 255, 0.1); /* Quase transparente */
+    backdrop-filter: blur(10px); /* Efeito vidro fosco no fundo */
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    max-width: 32rem; /* max-w-lg do tailwind */
+    margin: 0 auto;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Cartões Internos (Mais opacos para leitura) */
+.glass-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 1.5rem; /* rounded-3xl */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* Medidor */
+.gauge-container {
+    position: relative;
+    width: 100%; 
+    max-width: 500px;
+    aspect-ratio: 2 / 1;
+    margin: 0 auto;
+    overflow: hidden;
+    touch-action: none; 
+}
+
+.needle {
+    transform-origin: bottom center;
+    transition: transform 0.1s ease-out;
+}
+
+/* Utils */
+.screen { display: none; }
+.screen.active { display: flex; }
+
+.score-label {
+    font-size: 10px;
+    font-weight: 900;
+    fill: white;
+    text-anchor: middle;
+    dominant-baseline: central;
+    pointer-events: none;
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.5s ease-out forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+@keyframes fadeInUp {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Custom Select Icon */
+.custom-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+}
+
+/* Estilizando o Slider (Range Input) */
+input[type=range] {
+    -webkit-appearance: none; 
+    appearance: none;
+    background: transparent; 
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    background: #2563eb;
+    cursor: pointer;
+    margin-top: -10px; 
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 6px;
+    cursor: pointer;
+    background: #cbd5e1;
+    border-radius: 3px;
+}
+
+/* style.css */
+
+.gauge-container {
+    position: relative;
+    width: 100%; 
+    max-width: 700px; /* Mudei de 500px para 700px (fica maior em telas grandes) */
+    aspect-ratio: 2 / 1; 
+    margin: 0 auto;
+    overflow: hidden;
+    touch-action: none; 
+}
