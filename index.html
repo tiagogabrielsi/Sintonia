@@ -99,7 +99,7 @@
             <div class="glass-card p-8 flex flex-col items-center justify-center">
                 <div id="display-rounds" class="text-6xl font-black text-blue-600 mb-2">4</div>
                 <span class="text-gray-400 font-bold uppercase tracking-widest text-sm mb-8">Rodadas</span>
-                <input type="range" id="range-rounds" min="3" max="10" value="4" class="w-full mb-6" oninput="updateRoundDisplay()">
+                <input type="range" id="range-rounds" min="3" max="100" value="4" class="w-full mb-6" oninput="updateRoundDisplay()">
                 <p class="text-xs text-gray-400 text-center leading-relaxed">
                     Cada rodada um jogador diferente dá a dica.<br>
                     <span class="font-bold text-gray-600">Mais rodadas = Jogo mais longo!</span>
@@ -137,7 +137,7 @@
                 <h3 class="font-black text-lg text-gray-800">Área Alvo Revelada!</h3>
                 <p class="text-xs text-gray-500 mt-1 font-medium">Dê uma dica verbal que se encaixe na posição!</p>
             </div>
-            // Altera cores e tamanho do ponteiro e do circulo
+            
             <div class="glass-card p-0 pt-6 pb-6 relative overflow-hidden">
                 <div class="gauge-container">
                     <svg viewBox="0 0 200 100" class="w-full h-full">

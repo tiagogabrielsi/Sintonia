@@ -5,9 +5,17 @@ const DEFAULT_CARDS = [
     { l: 'Quente', r: 'Frio' }, { l: 'Herói', r: 'Vilão' }, { l: 'Fantasia', r: 'Realidade' },
     { l: 'Liso', r: 'Áspero' }, { l: 'Inútil', r: 'Útil' }, { l: 'Triste', r: 'Feliz' },
     { l: 'Redondo', r: 'Pontudo' }, { l: 'Barato', r: 'Caro' }, { l: 'Saboroso', r: 'Sem Gosto' },
-    { l: 'Comercial', r: 'Arte' }, { l: 'Pop', r: 'Rock' }, { l: 'Curto', r: 'Longo' },
-    { l: 'Gosto Ruim', r: 'Gosto Bom' }, { l: 'Aterrorizante', r: 'Fofo' },
-    { l: 'Passado', r: 'Futuro' }, { l: '80s', r: '2020s' }, { l: 'Cheiro Bom', r: 'Cheiro Ruim' }
+    { l: 'Curto', r: 'Longo' }, { l: 'Gosto Ruim', r: 'Gosto Bom' }, { l: 'Aterrorizante', r: 'Fofo' },
+    { l: 'Passado', r: 'Futuro' }, { l: 'Cheiro Bom', r: 'Cheiro Ruim' }, { l: 'Rápido', r: 'Devagar' },
+    { l: 'Claro', r: 'Escuro' }, { l: 'Grande', r: 'Pequeno' }, { l: 'Forte', r: 'Fraco' },
+    { l: 'Molhado', r: 'Seco' }, { l: 'Pesado', r: 'Leve' }, { l: 'Moderno', r: 'Antigo' },
+    { l: 'Calmo', r: 'Agitado' }, { l: 'Natural', r: 'Artificial' }, { l: 'Silencioso', r: 'Barulhento' },
+    { l: 'Simples', r: 'Complexo' }, { l: 'Organizado', r: 'Bagunçado' }, { l: 'Comum', r: 'Raro' },
+    { l: 'Doce', r: 'Salgado' }, { l: 'Quente', r: 'Gelado' }, { l: 'Corajoso', r: 'Medroso' },
+    { l: 'Educado', r: 'Grosseiro' }, { l: 'Lógico', r: 'Esquisito' }, { l: 'Rico', r: 'Pobre' },
+    { l: 'Criativo', r: 'Sem Imaginação' }, { l: 'Macio', r: 'Duro' }, { l: 'Limpo', r: 'Sujo' },
+    { l: 'Leve', r: 'Pesado' }, { l: 'Veloz', r: 'Lento' }, { l: 'Famoso', r: 'Desconhecido' }
+
 ];
 
 const PLAYER_COLORS = [
@@ -15,8 +23,15 @@ const PLAYER_COLORS = [
     '#f97316', '#ef4444', '#eab308', '#6366f1', '#14b8a6'
 ];
 
+// NOVA LISTA DE OPÇÕES DE EMOJI
+const EMOJI_LIST = [
+    '😎', '👽', '🤠', '🥳', '🤓', '🤖', '👻', '🦄', '🐯', '🐶', 
+    '🦁', '🐸', '🍕', '🚀', '💀', '💩', '🤡', '👾', '🎃', '💍',
+    '👑', '⚽', '🎮', '🐱', '🐻', '🦊', '🐼', '🐨', '🐔', '🐧'
+];
+
 let state = {
-    players: [], scores: [], totalRounds: 4, currentRound: 1, turnIndex: 0, 
+    players: [], playerEmojis: [], scores: [], totalRounds: 4, currentRound: 1, turnIndex: 0, 
     targetAngle: 90, guessAngle: 90, currentCard: {}, guessersQueue: [], roundGuesses: [],
     
     // LÓGICA DE NÃO REPETIÇÃO
@@ -92,31 +107,40 @@ function processCustomWords() {
     showScreen('screen-setup-players');
 }
 
+// MUDANÇA PRINCIPAL: Geração do <select> de emojis
 function updatePlayerInputs() {
     const val = document.getElementById('num-players').value;
     document.getElementById('display-players').innerText = val;
-
     const count = parseInt(val);
     const container = document.getElementById('players-inputs');
     container.innerHTML = '';
-    const icons = ['😎', '👽', '🤠', '🥳', '🤓', '🤖', '👻', '🦄', '🐯', '🐶'];
 
     for(let i=0; i<count; i++) {
         const playerColor = PLAYER_COLORS[i % PLAYER_COLORS.length];
-        const icon = icons[i % icons.length];
         const delay = i * 0.05;
+        
+        // Gera as opções do <select> e pré-seleciona uma diferente para cada jogador
+        let optionsHtml = '';
+        EMOJI_LIST.forEach((emoji, idx) => {
+            // Lógica para distribuir emojis diferentes inicialmente
+            const isSelected = idx === (i % EMOJI_LIST.length) ? 'selected' : '';
+            optionsHtml += `<option value="${emoji}" ${isSelected}>${emoji}</option>`;
+        });
 
         container.innerHTML += `
         <div class="fade-in-up flex items-center bg-white p-2 pr-3 rounded-2xl shadow-sm border border-gray-100" style="animation-delay: ${delay}s">
-            <div class="w-10 h-10 rounded-xl flex items-center justify-center text-xl mr-3 shrink-0" 
-                 style="background-color: ${playerColor}20; color: ${playerColor};">
-                ${icon}
-            </div>
+            <div class="relative w-12 h-12 mr-3 shrink-0">
+                <select id="p-emoji-${i}" 
+                        class="w-full h-full text-2xl text-center appearance-none border-none bg-transparent cursor-pointer focus:outline-none"
+                        style="background-color: ${playerColor}20; color: ${playerColor}; border-radius: 0.75rem;">
+                    ${optionsHtml}
+                </select>
+                </div>
+
             <div class="flex-1">
                 <input type="text" id="p-name-${i}" value="Player ${i+1}" 
                        class="w-full bg-transparent border-none p-0 text-gray-800 font-bold focus:ring-0 placeholder-gray-300 outline-none" 
-                       style="color: ${playerColor}"
-                       placeholder="Nome">
+                       style="color: ${playerColor}" placeholder="Nome">
             </div>
         </div>`;
     }
@@ -149,7 +173,8 @@ function startGame() {
 function startRound() {
     if (state.currentRound > state.totalRounds) { endGame(); return; }
     
-    state.targetAngle = Math.floor(Math.random() * 130) + 25;
+    // Agora o alvo pode cair em qualquer lugar (0 a 180)
+    state.targetAngle = Math.floor(Math.random() * 181);
     
     // --- LÓGICA DE NÃO REPETIÇÃO ---
     
